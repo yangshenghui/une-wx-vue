@@ -1,0 +1,233 @@
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video,
+input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  /* font-size: 100%; */
+  font-weight: normal;
+  vertical-align: baseline;
+}
+
+/* HTML5 display-role reset for older browsers */
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+menu,
+nav,
+section {
+  display: block;
+}
+
+body {
+  line-height: 1;
+  font-family: "Microsoft YaHei";
+  font-size: 16px;
+}
+
+blockquote,
+q {
+  quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+/* custom */
+a {
+  color: #7e8c8d;
+  text-decoration: none;
+  -webkit-backface-visibility: hidden;
+}
+
+
+ul {
+    list-style-type: none
+}
+
+li {
+  list-style: none;
+}
+
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 5px;
+  background-color: rgba(125, 125, 125, 0.7);
+  -webkit-border-radius: 6px;
+}
+
+html,
+body {
+  width: 100%;
+}
+
+body {
+  -webkit-text-size-adjust: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.une-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.une-header {
+    position: fixed;
+    left:0;
+    top:0;
+    background-color: white;
+}
+.une-footer {
+    height: 60px;
+    flex: 1;
+    position: fixed;
+    left:0;
+    bottom:0;
+}
+.une-menus {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-flow: nowrap;
+    background-color: slategray;
+}
+.une-menu-item {
+    flex: 1;
+    height: 60px;
+    width: 95px;
+}
+.menu-1 {
+    background-image: url(../images/header.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.menu-2 {
+  background-image: url(../images/look-vedio.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.menu-3 {
+  background-image: url(../images/buy-vedio.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.menu-4 {
+  background-image: url(../images/user-center.png);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.une-menu-item a {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
