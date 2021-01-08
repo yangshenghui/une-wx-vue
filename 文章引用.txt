@@ -1,0 +1,16 @@
+vue 调用视频播放插件（vue-video-player）
+https://www.jianshu.com/p/e8e747e33ef0
+
+vue的css清楚默认样式
+https://www.jianshu.com/p/23de3308ef23
+
+
+node升级的正确方法
+https://www.jianshu.com/p/bff222ca8ca8
+
+
+git学习-如何将本地项目上传（同步）到github远程仓库
+https://blog.csdn.net/vir_lee/article/details/80464408
+
+git教程
+https://www.yiibai.com/git/git_pull.html
