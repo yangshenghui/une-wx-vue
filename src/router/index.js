@@ -1,35 +1,34 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import UpLoad from '@/client/upload'
-import Home from '@/client/home'
-import List from '@/client/list'
-import Vedio from '@/client/vedio'
-import User from '@/client/user'
+import VueRouter from 'vue-router'
+import routes from '../router/home'// 路由数组文件引入
 
+Vue.use(VueRouter)
 
-Vue.use(Router)
-
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      component: Home
-    },
-    {
-      path: '/home',
-      component: Home
-    },
-    {
-      path: '/list',
-      component: List
-    },
-    {
-      path: '/vedio',
-      component: Vedio
-    },
-    {
-      path: '/user',
-      component: User
+//路由模式
+const router = new VueRouter({
+  mode: 'hash',
+  base: process.env.BASE_URL,
+  routes,
+  //当切换到新路由时，页面滚到顶部，或者是保持原先的滚动位置
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {
+        x: 0,
+        y: 0
+      }
     }
-  ]
+  }
 })
+
+/* 路由发生变化修改页面title */
+// router.beforeEach((to, from, next) => {
+//   const title = to.meta.title;
+//   if (title) {
+//     document.title = typeof title === "function" ? title(to, from) : title;
+//   }
+//   next();
+// });
+
+export default router
