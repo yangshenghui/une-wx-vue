@@ -51,6 +51,7 @@
         <div class="une-menus">
             <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
             <!-- <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div> -->
+            <div class="une-menu-item menu-3"><router-link to="/read"></router-link></div>
             <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div>
             <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
         </div>

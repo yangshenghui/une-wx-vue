@@ -5,6 +5,7 @@ export const reqTypes = () => ajax('v1/weixin/getTypes', {}, {type:'GET'})
 export const reqSwipes = () => ajax('v1/weixin/getSwipes', {}, {type:'GET'})
 export const reqVedioById = (id) => ajax('v1/weixin/getVedioById', {id})
 export const reqVediosByTypeId = (typeId, limit) => ajax('v1/weixin/getVediosByTypeId', {typeId, limit})
+export const reqReads = () => ajax('v1/weixin/getReads', {}, {type:'GET'})
 
 export default {
   reqTypes,
