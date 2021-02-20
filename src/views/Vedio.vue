@@ -40,6 +40,8 @@
     </div>
 </template>
 <script>
+    import { getOpenid } from "../utils/utils";
+
     export default {
         data () {
             return {
@@ -74,33 +76,45 @@
                   }
                 },
                 gklog: '',
+                openid: '',
+                vedioId: ''
 
             }
         },
         mounted() {
+          this.openid = getOpenid()
           console.log(this.$route.params)
           if(this.$route.params && this.$route.params.vedioId) {
-            this.getVedio(this.$route.params.vedioId);
+            this.vedioId = this.$route.params.vedioId
+            this.getVedio(this.vedioId)
           }else {
-            this.getVedio(1);
+            this.$router.push({name: 'Home'})
           }
 
           this.initVideo()
         },
+        beforeRouteLeave(to, from, next) {
+            this.saveGklog()
+            next()
+        },
         methods: {
           async getVedio(id){
             const res = await this.$api.reqVedioById(id)
-            console.log(res)
             this.playerOptions.src = res.url
             this.playerOptions.poster = res.image
             this.vedio = res
+          },
+          async saveGklog(){
+            console.log("gklog" + this.gklog)
+            if(this.opeid && this.gklog > 0) {
+              const res = await this.$api.reqGklog(this.openid, this.vedioId, this.gklog)
+            }
           },
           onClickLeft() {
             this.$router.go(-1);
           },
           initVideo: function () {
             const player = this.$refs.videoPlayer.player;
-            console.log(player)
               // 配置横屏插件
             // player.landscapeFullscreen({
             //       fullscreen: {
@@ -116,16 +130,10 @@
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
-              console.log(' onPlayerTimeupdate!', this.gklog)
-              if(this.gklog > 1) {
-                  player.currentTime(0)
-                  player.pause()
-                  this.$Notify({
-  message: '自定义颜色',
-  color: '#ad0000',
-  background: '#ffe1e1',
-});
-              }
+              // if(this.gklog > 3) {
+              //     player.currentTime(0)
+              //     player.pause()
+              // }
           }
         }
     }

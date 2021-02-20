@@ -1,7 +1,7 @@
 <template>
     <div class="une-container">
-        <div class="une-header">
-            <van-nav-bar title="文档资料" left-text="返回" left-arrow @click-left="onClickLeft" />
+        <div class="score_header">
+          <div class="title">文档资料</div>
         </div>
         <div class="une-main">
           <div class="une-list">
@@ -12,12 +12,11 @@
                 finished-text="没有更多了"
                 @load="onLoad"
               >
-                <div class="list-item" v-for="item in list" :key="item" >
-                  <div class="une-vedio">
-                      <div class="une-vedio-cover"><img src="../../assets/images/vedio-cover.jpeg" alt=""></div>
-                      <div class="une-vedio-detail">
-                          <div class="une-vedio-title"><span>视频名称{{i}}</span></div>
-                          <div class="une-vedio-progress"><span>观看进度%</span></div>
+                <div class="list-item" v-for="item in reads" :key="item.id" >
+                  <div class="une-read">
+                      <div class="une-read-detail" @click="toRead(item.url)">
+                          <div class="une-read-title"><span>{{item.name}}</span></div>
+                          <div class="une-read-progress"><a :href="item.url">资料下载</a></div>
                       </div>
                   </div>
               </div>
@@ -28,9 +27,7 @@
         </div>
         <div class="une-footer">
             <div class="une-menus">
-                <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
-                <!-- <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div> -->
-                <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div>
+                <div class="une-menu-item menu-1"><router-link to="/pdf"></router-link></div>
                 <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
             </div>
         </div>
@@ -40,33 +37,30 @@
 export default {
   data() {
     return {
-      list: [],
+      reads: [],
       loading: false,
       finished: false,
       refreshing: false,
+      limit: 0,
     };
   },
   methods: {
     async onLoad() {
       if (this.refreshing) {
-        console.log(this.refreshing)
-        this.vedios = [];
+        this.reads = [];
         this.refreshing = false;
       }
 
       this.limit += 10;
-      const vedios = await this.$api.reqReads(this.typeId, this.limit)
-      if(vedios.rows.length > 0) {
-        this.vedios = vedios.rows;
+      const reads = await this.$api.reqReads(this.limit)
+      console.log(reads)
+      if(reads.rows.length > 0) {
+        this.reads = reads.rows;
       }
-
-      console.log(vedios.rows.length)
-       console.log(this.limit)
-
 
       this.loading = false;
 
-      if (vedios.rows.length < this.limit) {
+      if (reads.rows.length < this.limit) {
         this.finished = true;
       }
     },
@@ -78,56 +72,26 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
       this.onLoad();
+    },
+    toRead(pdfUrl) {
+      this.$router.push({ name: 'Read', params: { pdfInfo: pdfUrl }});
     }
   },
 };
 </script>
 <style scoped>
-    .une-header {
-        height: 1.55rem;
-        padding-left: 0.39rem;
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        border-bottom: 1px solid #dcdcdc;
-    }
-    .une-back {
-        width: 0.36rem;
-        height: 0.62rem;
-        background-image: url(../../assets/images/left.png);
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-    .une-buy {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      align-items: center;
-      padding: 0 1rem;
-    }
-    .une-buy-one,
-    .une-buy-all {
-      flex: 1;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-    }
-    .une-buy-one span,
-    .une-buy-all span {
-      font-size: 0.45rem;
-      font-weight: normal;
-      font-stretch: normal;
-      line-height: 0.75rem;
-      letter-spacing: 0.03rem;
-      color: #8294ae;
-    }
-
-    .une-buy-one .buyActive,
-    .une-buy-all .buyActive {
-        padding-bottom: 2px;
-        border-bottom: 2px solid #40e0d0ba;
+    .score_header {
+      text-align: center;
+      letter-spacing: 0.2em;
+      position: relative;
+      font-size: 18px;
+      width: 100%;
+      background-color: #8294ae;
+      color: #fff;
+      height: 45px;
+      line-height: 45px;
+      flex: none;
+      z-index: 1;
     }
     .une-list {
       width: 100%;
@@ -135,32 +99,32 @@ export default {
     .van-pull-refresh {
       width: 100%;
     }
-    .une-vedio {
+    .une-read {
         display: flex;
         flex-direction: row;
         padding: 0.21rem;
         border-top: 1px solid #ccc;
     }
-    .une-vedio:nth-last-child() {
+    .une-read:nth-last-child() {
         border-bottom: 1px solid #ccc;
     }
-    .une-vedio-cover {
+    .une-read-cover {
         width: 3.48rem;
 	      height: 2rem;
     }
-    .une-vedio-cover img{
+    .une-read-cover img{
         width: 100%;
         height: 100%;
     }
-    .une-vedio-detail {
+    .une-read-detail {
         flex: 1;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         align-items: baseline;
     }
-    .une-vedio-title,
-    .une-vedio-progress {
+    .une-read-title,
+    .une-read-progress {
         font-size: 0.3rem;
         font-weight: normal;
         font-stretch: normal;

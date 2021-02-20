@@ -1,23 +1,32 @@
 <template>
     <div class="une-container">
         <div class="une-main une-user">
-            <div class="une-user-title">
-                <div class="une-user-avatar"><img src="../../assets/images/user.png" alt=""></div>
-                <div class="une-user-name"><span>用户名称</span></div>
+            <div class="une-user-title" v-if="openid == '' || openid == 'undefined'">
+                <div class="une-user-avatar" >
+                  <img src="../../assets/images/user.png" alt="" >
+                </div>
+                <div class="une-user-name"><span>用户未登录</span></div>
+            </div>
+            <div class="une-user-title" v-if="openid != '' && openid != 'undefined'">
+                <div class="une-user-avatar">
+                  <img :src="customer.headimgurl" alt="">
+                </div>
+                <div class="une-user-name"><span>{{customer.nickname}}</span></div>
                 <div class="une-user-member"><img src="../../assets/images/member.png" alt=""></div>
             </div>
             <div class="une-user-detail">
                 <h2>我的信息</h2>
-                <ul>
-                    <li>姓名：</li>
-                    <li>出生年月:</li>
-                    <li>手机号：</li>
-                    <li>邮箱：</li>
-                    <li>我的会员：</li>
+                <ul> 
+                    <li>姓名：{{customer.nickname}}</li>
+                    <li>性别: {{customer.sex == '1' ? '男' : '女'}}</li>
+                    <li>出生年月: {{customer.birthday}}</li>
+                    <li>手机号：{{customer.phone}}</li>
+                    <li>邮箱：{{customer.email}}</li>
+                    <li>我的会员：{{customer.member}}</li>
                 </ul>
             </div>
             <div class="une-user-buy">
-                <h2>已购列表</h2>
+                <h2>浏览列表</h2>
                 <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
                   <van-list
                     v-model="loading"
@@ -25,12 +34,12 @@
                     finished-text="没有更多了"
                     @load="onLoad"
                   >
-                    <div class="list-item" v-for="item in list" :key="item" >
+                    <div class="list-item" v-for="item in watchs" :key="item.id" >
                       <div class="une-vedio">
-                          <div class="une-vedio-cover"><img src="../../assets/images/vedio-cover.jpeg" alt=""></div>
+                          <div class="une-vedio-cover"><img :src="item.vedioImage" alt=""></div>
                           <div class="une-vedio-detail">
-                              <div class="une-vedio-title"><span>视频名称{{i}}</span></div>
-                              <div class="une-vedio-progress"><span>观看进度%</span></div>
+                              <div class="une-vedio-title"><span>{{item.vedioTitle}}</span></div>
+                              <div class="une-vedio-progress"><span>观看{{item.gklog}}秒</span></div>
                           </div>
                       </div>
                   </div>
@@ -42,39 +51,53 @@
             <div class="une-menus">
                 <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
                 <!-- <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div> -->
-                <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div>
+                <!-- <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div> -->
                 <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
             </div>
         </div>
     </div>
 </template>
 <script>
+import { getOpenid } from "../utils/utils";
+
 export default {
   data() {
     return {
-      list: [],
+      watchs: [],
       loading: false,
       finished: false,
       refreshing: false,
+      customer: {},
+      limit: 0,
+      openid: ''
     };
   },
+  mounted() {
+    this.openid = getOpenid()
+    this.getCustomer();
+  },
   methods: {
-    onLoad() {
-      setTimeout(() => {
-        if (this.refreshing) {
-          this.list = [];
-          this.refreshing = false;
-        }
+    async onLoad() {
+      if (this.refreshing) {
+        this.watchs = [];
+        this.refreshing = false;
+      }
 
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        this.loading = false;
+      this.limit += 10;
+      const watchs = await this.$api.reqWatchs(this.openid, this.limit)
+      if(watchs.rows.length > 0) {
+        this.watchs = watchs.rows;
+      }
 
-        if (this.list.length >= 40) {
-          this.finished = true;
-        }
-      }, 1000);
+      console.log(watchs.rows.length)
+       console.log(this.limit)
+
+
+      this.loading = false;
+
+      if (watchs.rows.length < this.limit) {
+        this.finished = true;
+      }
     },
     onRefresh() {
       // 清空列表数据
@@ -84,7 +107,11 @@ export default {
       // 将 loading 设置为 true，表示处于加载状态
       this.loading = true;
       this.onLoad();
-    }
+    },
+    async getCustomer(){
+      const res = await this.$api.reqCustomer(this.openid)
+      this.customer = res
+    },
   },
 };
 </script>
@@ -106,10 +133,12 @@ export default {
     .une-user-avatar {
         width: 1.73rem;
         height: 1.73rem;
+        margin-bottom: 10PX;
     }
     .une-user-avatar img {
         width: 100%;
         height: 100%;
+        border-radius: 50%;
     }
     .une-user-name {
       font-size: 0.4rem;
@@ -118,6 +147,7 @@ export default {
       line-height: 0.45rem;
       letter-spacing: 0.02rem;
       color: #010101;
+      margin-left: 10Px;
     }
     .une-user-member {
       width: 1.5rem;

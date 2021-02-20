@@ -4,7 +4,7 @@
       <div class="return__icon" @click="returnBack">
         <van-icon name="arrow-left" />
       </div>
-      <div class="title">下载详情</div>
+      <div class="title">资料详情</div>
     </div>
     <div class="pdfIn" v-show="fileType === 'pdf'" ref="pdfView">
       <div>
@@ -39,22 +39,21 @@ export default {
       pdfScroll: null,
     }
   },
-  computed: {
-    pdfInfo () { // 路由携带的参数，包括pdf链接
-      return this.$route.query.pdfInfo
-    }
-  },
   created () {
     // 有时PDF文件地址会出现跨域的情况,这里最好处理一下
-    this.src = pdf.createLoadingTask("http://qmmb7uflf.hn-bkt.clouddn.com/pdf/SpringBoot%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B%E8%A7%A3%E6%9E%90.pdf")
-    this.src.promise.then(pdf => {
-      this.numPages = pdf.numPages
-    })
-    this.init()
+    if(this.$route.params && this.$route.params.pdfInfo) {
+      this.src = pdf.createLoadingTask(this.$route.params.pdfInfo)
+      this.src.promise.then(pdf => {
+        this.numPages = pdf.numPages
+      })
+      this.init()
+    }else {
+      this.$router.push({name: 'Pdf'})
+    }
   },
   methods: {
     returnBack () {
-      this.$router.push({name: 'myDownLoad'})
+      this.$router.push({name: 'Pdf'})
     },
     init () {
       this.$nextTick(() => {
@@ -81,7 +80,7 @@ export default {
     position: relative;
     font-size: 18px;
     width: 100%;
-    background-color: rgb(0, 115, 231);
+    background-color: #8294ae;
     color: #fff;
     height: 45px;
     line-height: 45px;

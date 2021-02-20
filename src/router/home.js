@@ -4,6 +4,7 @@ const List = () => import('../views/List.vue')
 const Vedio = () => import('../views/Vedio.vue')
 const User = () => import('../views/User.vue')
 const Read = () => import('../views/Read.vue')
+const Pdf = () => import('../views/Pdf.vue')
 
 
 export default [
@@ -40,6 +41,11 @@ export default [
     path: '/User',
     name: "User",
     component: User
+  },
+  {
+    path: '/Pdf',
+    name: "Pdf",
+    component: Pdf
   },
   {
     path: '/Read',

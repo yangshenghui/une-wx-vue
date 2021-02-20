@@ -2,7 +2,7 @@
   <div class="une-container">
     <div class="une-header">
         <div class="une-logo">
-          <img src="http://qmmb7uflf.hn-bkt.clouddn.com/image/logo.png" alt="UULTRA  ">
+          <img src="http://une.sven-it.com/image/logo.png" alt="UULTRA  ">
         </div>
         <!-- <div class="une-search">
           <van-search v-model="searchVal" shape="round"  placeholder="请输入搜索关键词"/>
@@ -122,7 +122,7 @@ export default {
     async getSwipes(){
       const swipes = await this.$api.reqSwipes()
       console.log(swipes)
-      this.swipes = swipes
+      this.swipes = swipes.rows
     },
     tabChange(name) {
       console.log("tabChange")
@@ -136,6 +136,7 @@ export default {
       this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
     },
     toSwipe(url) {
+      console.log(url)
       window.location.href= url
     }
   }
