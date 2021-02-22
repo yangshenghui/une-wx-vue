@@ -40,35 +40,35 @@ export default {
     );
   },
   watch: {
-    // $route: function(to, from, value) {
-    //   // <---------------------------微信授权逻辑------------------------------->
-    //   let openId = getOpenid();
-    //   let isStart = getStore("mask_isStart");
-    //   if (!openId && window.location.hash.indexOf("oauth") == -1) {
-    //     setStore("BtargetUrl", to.path);
-    //     if (window.location.search.indexOf("?") == -1) {
-    //       this.$router.replace(`/oauth`);
-    //     } else {
-    //       this.$router.replace(`/oauth${window.location.search}`);
-    //     }
-    //   } else if (
-    //     isStart != null &&
-    //     isStart == "false" &&
-    //     to.path != "/result"
-    //   ) {
-    //     //已经答完题，直接进结果页
-    //     this.$router.replace("/result");
-    //   }
+    $route: function(to, from, value) {
+      // <---------------------------微信授权逻辑------------------------------->
+      let openId = getOpenid();
+      let isStart = getStore("mask_isStart");
+      if (!openId && window.location.hash.indexOf("oauth") == -1) {
+        setStore("BtargetUrl", to.path);
+        if (window.location.search.indexOf("?") == -1) {
+          this.$router.replace(`/oauth`);
+        } else {
+          this.$router.replace(`/oauth${window.location.search}`);
+        }
+      } else if (
+        isStart != null &&
+        isStart == "false" &&
+        to.path != "/result"
+      ) {
+        //已经答完题，直接进结果页
+        this.$router.replace("/result");
+      }
 
-    //   //路由返回/home和/from时，重新配置微信隐藏菜单（防止其它无分享页面返回这两个页面导致这两个页面分享功能失效）
-    //   // if (openId && (to.path === "/home" || to.path === "/form")) {
-    //   //   showMenuItems();
-    //   // }
+      //路由返回/home和/from时，重新配置微信隐藏菜单（防止其它无分享页面返回这两个页面导致这两个页面分享功能失效）
+      // if (openId && (to.path === "/home" || to.path === "/form")) {
+      //   showMenuItems();
+      // }
 
-    //   // if (to.path === '/answer') {
-    //   //   this.isPlay = true
-    //   // }
-    // }
+      // if (to.path === '/answer') {
+      //   this.isPlay = true
+      // }
+    }
   }
 };
 </script>

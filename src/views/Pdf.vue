@@ -16,7 +16,7 @@
                   <div class="une-read">
                       <div class="une-read-detail" @click="toRead(item.url)">
                           <div class="une-read-title"><span>{{item.name}}</span></div>
-                          <div class="une-read-progress"><a :href="item.url">资料下载</a></div>
+                          <!-- <div class="une-read-progress"><a :href="item.url">资料下载</a></div> -->
                       </div>
                   </div>
               </div>
