@@ -60,14 +60,14 @@ export default {
         this.$router.replace("/result");
       }
 
-      //路由返回/home和/from时，重新配置微信隐藏菜单（防止其它无分享页面返回这两个页面导致这两个页面分享功能失效）
-      // if (openId && (to.path === "/home" || to.path === "/form")) {
-      //   showMenuItems();
-      // }
+      // //路由返回/home和/from时，重新配置微信隐藏菜单（防止其它无分享页面返回这两个页面导致这两个页面分享功能失效）
+      // // if (openId && (to.path === "/home" || to.path === "/form")) {
+      // //   showMenuItems();
+      // // }
 
-      // if (to.path === '/answer') {
-      //   this.isPlay = true
-      // }
+      // // if (to.path === '/answer') {
+      // //   this.isPlay = true
+      // // }
     }
   }
 };

@@ -7,7 +7,7 @@ import './styles/vanui.less'
 import "./utils/rem";//rem
 import api from './api'
 import FastClick from "fastclick";
-import { Loading,Toast,Swipe, SwipeItem, Lazyload,Tab, Tabs, Search, NavBar, Icon, PullRefresh,List, Notify} from 'vant';//vant组件按需引入
+import { Button, Loading,Toast,Swipe, SwipeItem, Lazyload,Tab, Tabs, Search, NavBar, Icon, PullRefresh,List, Notify} from 'vant';//vant组件按需引入
 Vue.use(api);
 
 import VueVideoPlayer from 'vue-video-player'
@@ -28,6 +28,7 @@ import 'quill/dist/quill.bubble.css'
 
 Vue.use(VueQuillEditor, {})
 
+Vue.use(Button);
 Vue.use(Loading);
 Vue.use(Toast);
 Vue.use(Swipe);

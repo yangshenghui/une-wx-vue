@@ -5,6 +5,8 @@ const Vedio = () => import('../views/Vedio.vue')
 const User = () => import('../views/User.vue')
 const Read = () => import('../views/Read.vue')
 const Pdf = () => import('../views/Pdf.vue')
+const Users = () => import('../views/Users.vue')
+
 
 
 export default [
@@ -51,5 +53,10 @@ export default [
     path: '/Read',
     name: "Read",
     component: Read
-  }
+  },
+  {
+    path: '/Users',
+    name: "Users",
+    component: Users
+  },
 ];

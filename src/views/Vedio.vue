@@ -114,8 +114,8 @@
             this.$router.go(-1);
           },
           initVideo: function () {
-            const player = this.$refs.videoPlayer.player;
-              // 配置横屏插件
+            // const player = this.$refs.videoPlayer.player;
+            // 配置横屏插件
             // player.landscapeFullscreen({
             //       fullscreen: {
             //           enterOnRotate: true, //在横向旋转设备时进入全屏模式

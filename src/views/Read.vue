@@ -96,7 +96,9 @@ export default {
     font-size: 20px;
   }
   .pdfIn {
-    height: calc(100% - 50px);
+    height: 100%;
     /* overflow: hidden; */
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch
   }
 </style>

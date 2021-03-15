@@ -14,10 +14,11 @@
               >
                 <div class="list-item" v-for="item in reads" :key="item.id" >
                   <div class="une-read">
-                      <div class="une-read-detail" @click="toRead(item.url)">
+                      <div class="une-read-detail">
                           <div class="une-read-title"><span>{{item.name}}</span></div>
-                          <!-- <div class="une-read-progress"><a :href="item.url">资料下载</a></div> -->
+
                       </div>
+                      <van-button size="small" color="#8294ae" round type="info" @click.stop="download(item.url)">阅读</van-button>
                   </div>
               </div>
               </van-list>
@@ -28,7 +29,7 @@
         <div class="une-footer">
             <div class="une-menus">
                 <div class="une-menu-item menu-1"><router-link to="/pdf"></router-link></div>
-                <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
+                <div class="une-menu-item menu-4"><router-link to="/users"></router-link></div>
             </div>
         </div>
     </div>
@@ -42,9 +43,13 @@ export default {
       finished: false,
       refreshing: false,
       limit: 0,
+      downloadLink: ''
     };
   },
   methods: {
+    download(data) {
+      window.location.href = data
+    },
     async onLoad() {
       if (this.refreshing) {
         this.reads = [];
