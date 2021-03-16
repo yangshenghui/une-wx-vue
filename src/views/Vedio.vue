@@ -20,7 +20,9 @@
             </div> -->
         </div>
         <div class="une-vedio-info">
-            <h2>视频介绍</h2>
+            <h2>视频介绍
+              <van-button size="small"  style="float: right;margin-right: 23px;" color="#8294ae" round type="info" @click.stop="download()">资料阅读</van-button>
+            </h2>
             <div class="une-vedio-desc">
                 <!-- <h6>简介</h6> -->
                 <span>
@@ -86,16 +88,13 @@
           console.log(this.$route.params)
           if(this.$route.params && this.$route.params.vedioId) {
             this.vedioId = this.$route.params.vedioId
+            this.gklog = this.$route.params.gklog
             this.getVedio(this.vedioId)
           }else {
             this.$router.push({name: 'Home'})
           }
 
           this.initVideo()
-        },
-        beforeRouteLeave(to, from, next) {
-            this.saveGklog()
-            next()
         },
         methods: {
           async getVedio(id){
@@ -105,8 +104,10 @@
             this.vedio = res
           },
           async saveGklog(){
-            console.log("gklog" + this.gklog)
-            if(this.opeid && this.gklog > 0) {
+            //const res = await this.$api.reqGklog("oNv5N6cnocEjUaFl33pGoRGSxzHs", this.vedioId, this.gklog)
+            console.log("this.opeid" + this.opeid)
+            console.log("this.opeid" + this.gklog)
+            if(this.openid && this.gklog > 0) {
               const res = await this.$api.reqGklog(this.openid, this.vedioId, this.gklog)
             }
           },
@@ -130,11 +131,16 @@
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
+              this.saveGklog()
               // if(this.gklog > 3) {
               //     player.currentTime(0)
               //     player.pause()
               // }
-          }
+          },
+          download() {
+            console.log(this.vedio.pdfurl)
+            window.location.href = this.vedio.pdfurl
+          },
         }
     }
 </script>

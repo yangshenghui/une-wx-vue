@@ -34,7 +34,7 @@
                     finished-text="没有更多了"
                     @load="onLoad"
                   >
-                    <div class="list-item" v-for="item in watchs" :key="item.id" >
+                    <div class="list-item" v-for="item in watchs" :key="item.id" @click="toVedio(item.id, item.gklog)">
                       <div class="une-vedio">
                           <div class="une-vedio-cover"><img :src="item.vedioImage" alt=""></div>
                           <div class="une-vedio-detail">
@@ -114,6 +114,10 @@ export default {
         const res = await this.$api.reqCustomer(this.openid)
         this.customer = res
       }
+    },
+    toVedio(vedioId, gklog) {
+      console.log(vedioId)
+      this.$router.push({ name: 'Vedio', params: { vedioId: vedioId, gklog: gklog }});
     },
   },
 };
