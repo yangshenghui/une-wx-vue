@@ -18,7 +18,7 @@
                           <div class="une-read-title"><span>{{item.name}}</span></div>
 
                       </div>
-                      <van-button size="small" color="#8294ae" round type="info" @click.stop="download(item.url)">阅读</van-button>
+                      <van-button size="small" color="#8294ae" round type="info" @click.stop="toRead(item.url)">阅读</van-button>
                   </div>
               </div>
               </van-list>
@@ -79,7 +79,7 @@ export default {
       this.onLoad();
     },
     toRead(pdfUrl) {
-      this.$router.push({ name: 'Read', params: { pdfInfo: pdfUrl }});
+      this.$router.push({ name: 'Pdf1', params: { pdfInfo: pdfUrl }});
     }
   },
 };

@@ -21,12 +21,13 @@
         </div>
         <div class="une-vedio-info">
             <h2>视频介绍
-              <van-button size="small"  style="float: right;margin-right: 23px;" color="#8294ae" round type="info" @click.stop="download()">资料阅读</van-button>
+              <van-button size="small"  style="float: right;margin-right: 23px;" color="#8294ae" round type="info" @click.stop="toRead(vedio.url)">资料阅读</van-button>
             </h2>
             <div class="une-vedio-desc">
                 <!-- <h6>简介</h6> -->
                 <span>
-                  <quill-editor v-model="vedio.summary" ref="myQuillEditor" :options="editorOption"></quill-editor>
+                  <quill-editor v-model="vedio.summary" ref="myQuillEditor" :options="editorOption"
+                    @focus="onEditorFocus($event)"></quill-editor>
                 </span>
             </div>
         </div>
@@ -58,10 +59,10 @@
                     aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
                     fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
                     sources: [{
-                    src: 'http://sven-it.com/vedio/video1.mp4',  // 路径
+                    src: '',  // 路径
                     type: 'video/mp4'  // 类型
                     }],
-                    poster: "http://sven-it.com/vedio/vedio-cover.jpeg", //你的封面地址
+                    poster: "", //你的封面地址
                     // width: document.documentElement.clientWidth,
                     notSupportedMessage: '此视频暂无法播放，请稍后再试', //允许覆盖Video.js无法播放媒体源时显示的默认信息。
                     controlBar: {
@@ -99,7 +100,9 @@
         methods: {
           async getVedio(id){
             const res = await this.$api.reqVedioById(id)
-            this.playerOptions.src = res.url
+            console.log("res")
+            console.log(res)
+            this.playerOptions.sources[0].src = res.url
             this.playerOptions.poster = res.image
             this.vedio = res
           },
@@ -141,6 +144,14 @@
             console.log(this.vedio.pdfurl)
             window.location.href = this.vedio.pdfurl
           },
+          toRead(pdfUrl) {
+            this.$router.push({ name: 'Pdf2', params: { pdfInfo: pdfUrl }});
+          },
+          onEditorFocus(event) {
+              event.enable(false);
+          }
+
+
         }
     }
 </script>

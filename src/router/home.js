@@ -6,6 +6,8 @@ const User = () => import('../views/User.vue')
 const Read = () => import('../views/Read.vue')
 const Pdf = () => import('../views/Pdf.vue')
 const Users = () => import('../views/Users.vue')
+const Pdf1 = () => import('../views/Pdf1.vue')
+const Pdf2 = () => import('../views/Pdf2.vue')
 
 
 
@@ -58,5 +60,15 @@ export default [
     path: '/Users',
     name: "Users",
     component: Users
+  },
+  {
+    path: '/Pdf1',
+    name: "Pdf1",
+    component: Pdf1
+  },
+  {
+    path: '/Pdf2',
+    name: "Pdf2",
+    component: Pdf2
   },
 ];

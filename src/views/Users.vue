@@ -25,7 +25,7 @@
                     <li>我的会员：{{customer.member}}</li>
                 </ul>
             </div>
-            <div class="une-user-buy">
+            <!-- <div class="une-user-buy">
                 <h2>浏览列表</h2>
                 <van-pull-refresh v-model="refreshing" @refresh="onRefresh">
                   <van-list
@@ -45,7 +45,7 @@
                   </div>
                   </van-list>
                 </van-pull-refresh>
-            </div>
+            </div> -->
         </div>
         <div class="une-footer">
             <div class="une-menus">
