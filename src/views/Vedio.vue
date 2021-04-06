@@ -21,7 +21,7 @@
         </div>
         <div class="une-vedio-info">
             <h2>视频介绍
-              <van-button size="small"  style="float: right;margin-right: 23px;" color="#8294ae" round type="info" @click.stop="toRead(vedio.url)">资料阅读</van-button>
+              <van-button size="small"  style="float: right;margin-right: 23px;" color="#8294ae" round type="info" @click.stop="toRead(vedio.pdfurl)">资料阅读</van-button>
             </h2>
             <div class="une-vedio-desc">
                 <!-- <h6>简介</h6> -->

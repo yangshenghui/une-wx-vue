@@ -16,7 +16,7 @@ import { getOpenid } from '../utils/utils'
       "updateTimelineShareData",
       "showMenuItems",
       "hideAllNonBaseMenuItem",
-      "chooseWXPay"
+      "chooseWXPay",
     ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
   });
   showMenuItems()
@@ -68,6 +68,7 @@ export function showMenuItems() {
 }
 
 export function wxpay(payRes, cb) {
+  console.log(payRes)
   wx.chooseWXPay({
     appId: payRes.appId,
     timestamp: payRes.timeStamp, // 支付签名时间戳，注意微信jssdk中的所有使用timestamp字段均为小写。但最新版的支付后台生成签名使用的timeStamp字段名需大写其中的S字符
@@ -89,4 +90,22 @@ export function wxpay(payRes, cb) {
       cb('cancel')
     },
   });
+
+//   WeixinJSBridge.invoke(
+//     'getBrandWCPayRequest', {
+//        "appId": payRes.appId,     //公众号ID，由商户传入
+//        "timeStamp": payRes.timeStamp,         //时间戳，自1970年以来的秒数
+//        "nonceStr": payRes.nonceStr, //随机串
+//        "package": `prepay_id=${payRes.prepay_id}`,
+//        "signType": payRes.signType,         //微信签名方式：
+//        "paySign": payRes.paySign //微信签名
+//     },
+//     function(res){
+//       console.log(res)
+//     if(res.err_msg == "get_brand_wcpay_request:ok" ){
+//     // 使用以上方式判断前端返回,微信团队郑重提示：
+//           //res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+//     }
+//  });
+
 }

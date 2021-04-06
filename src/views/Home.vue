@@ -59,6 +59,10 @@
   </div>
 </template>
 <script>
+
+import { getOpenid } from "../utils/utils";
+import { wxpay } from "../utils/wxapi";
+
 export default {
   data() {
     return {
@@ -131,9 +135,14 @@ export default {
       this.refreshing = true
       this.onRefresh()
     },
-    toVedio(vedioId) {
+    async toVedio(vedioId) {
       console.log(vedioId)
-      this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
+      // this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
+      const openid = getOpenid()
+      console.log(openid)
+      const paySign = await this.$api.createUnifiedOrder(openid)
+      console.log("paySign"+ paySign)
+      wxpay(paySign)
     },
     toSwipe(url) {
       console.log(url)

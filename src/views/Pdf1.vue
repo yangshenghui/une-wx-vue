@@ -33,7 +33,7 @@
 		},
 		data() {
 			return {
-				url: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+				url: "",
 				pageNum: 1,
 				pageTotalNum: 1,
 				pageRotate: 0,
@@ -42,7 +42,13 @@
 				curPageNum: 0,
 			}
 		},
-		mounted: function() {},
+		created () {
+      if(this.$route.params && this.$route.params.pdfInfo) {
+        this.url = this.$route.params.pdfInfo;
+      }else {
+         this.$router.go(-1)
+      }
+    },
 		methods: {
             // 上一页函数，
 			prePage() {

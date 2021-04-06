@@ -1,11 +1,10 @@
 <template>
 	<div class="une-container">
+    <div class="une-header">
+        <van-nav-bar title="资料阅读" left-text="返回" left-arrow @click-left="onClickLeft" />
+    </div>
     <div class="une-main">
-		<div class="tools">
-			<div class="pre" @click.stop="prePage"> 上一页</div>
-      <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
-			<div class="next" @click.stop="nextPage"> 下一页</div>
-		</div>
+
 		<pdf ref="pdf"
 		:src="url"
 		:page="pageNum"
@@ -18,9 +17,10 @@
 		</pdf>
     </div>
     <div class="une-footer">
-      <div class="une-menus">
-          <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
-          <div class="une-menu-item menu-4"><router-link to="/users"></router-link></div>
+      <div class="tools">
+        <div class="pre" @click.stop="prePage"> 上一页</div>
+        <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
+        <div class="next" @click.stop="nextPage"> 下一页</div>
       </div>
     </div>
 	</div>
@@ -33,7 +33,7 @@
 		},
 		data() {
 			return {
-				url: "http://storage.xuetangx.com/public_assets/xuetangx/PDF/PlayerAPI_v1.0.6.pdf",
+				url: "",
 				pageNum: 1,
 				pageTotalNum: 1,
 				pageRotate: 0,
@@ -42,8 +42,20 @@
 				curPageNum: 0,
 			}
 		},
-		mounted: function() {},
+    created () {
+      console.log(this.$route.params)
+      if(this.$route.params && this.$route.params.pdfInfo) {
+        console.log("dsad")
+        console.log(this.$route.params.pdfInfo)
+        this.url = this.$route.params.pdfInfo;
+      }else {
+         this.$router.go(-1)
+      }
+    },
 		methods: {
+      onClickLeft() {
+        this.$router.go(-1);
+      },
             // 上一页函数，
 			prePage() {
 				var page = this.pageNum

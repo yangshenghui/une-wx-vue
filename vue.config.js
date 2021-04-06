@@ -25,23 +25,23 @@ module.exports = {
     }
   },
   configureWebpack: config => {
-    if (isProjuction) {
-      //为生产环境修改配置
-      config.plugins.push(
-        //自动删除console
-        new TerserPlugin({
-          terserOptions: {
-            compress: {
-              warnings: false,
-              drop_console: true,
-              drop_debugger: true,
-              pure_funcs: ['console.log']
-            }
-          }
-        }),
-        new BundleAnalyzerPlugin()
-      )
-    }
+    // if (isProjuction) {
+    //   //为生产环境修改配置
+    //   config.plugins.push(
+    //     //自动删除console
+    //     new TerserPlugin({
+    //       terserOptions: {
+    //         compress: {
+    //           warnings: false,
+    //           drop_console: true,
+    //           drop_debugger: true,
+    //           pure_funcs: ['console.log']
+    //         }
+    //       }
+    //     }),
+    //     new BundleAnalyzerPlugin()
+    //   )
+    // }
   },
   //配置CSS预处理器less文件自动化导入(用于颜色、变量、mixin……)
   chainWebpack: config => {
