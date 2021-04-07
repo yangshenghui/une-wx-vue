@@ -79,16 +79,29 @@ export function wxpay(payRes, cb) {
     success: function (res) {
       console.log('微信支付成功回调', res)
       // 支付成功后的回调函数
+      alert(res)
+      alert('success')
       cb('success')
     },
     fail: function (err) {
+      alert(err)
+      alert('fail')
       console.log('微信支付失败回调', err)
       cb('fail')
     },
     cancel: function (err) {
+      alert(err)
+      alert('cancel')
       console.log('用户取消微信支付', err)
       cb('cancel')
     },
+    complete: function (res) {
+      alert(res)
+      alert('complete')
+    if(res.errMsg == 'chooseWXPay:ok'){
+      // 回调函数内容
+    }
+    }
   });
 
 //   WeixinJSBridge.invoke(

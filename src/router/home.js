@@ -3,11 +3,11 @@ const Home = () => import('../views/Home.vue')
 const List = () => import('../views/List.vue')
 const Vedio = () => import('../views/Vedio.vue')
 const User = () => import('../views/User.vue')
-const Read = () => import('../views/Read.vue')
 const Pdf = () => import('../views/Pdf.vue')
 const Users = () => import('../views/Users.vue')
 const Pdf1 = () => import('../views/Pdf1.vue')
 const Pdf2 = () => import('../views/Pdf2.vue')
+const Member = () => import('../views/Member.vue')
 
 
 
@@ -52,11 +52,6 @@ export default [
     component: Pdf
   },
   {
-    path: '/Read',
-    name: "Read",
-    component: Read
-  },
-  {
     path: '/Users',
     name: "Users",
     component: Users
@@ -70,5 +65,10 @@ export default [
     path: '/Pdf2',
     name: "Pdf2",
     component: Pdf2
+  },
+  {
+    path: '/Member',
+    name: "Member",
+    component: Member
   },
 ];

@@ -5,13 +5,11 @@
         <router-view />
       </div>
     </transition>
-    <!-- <div class="tip" v-if="!isPortrait">请使用竖屏模式浏览</div> -->
   </div>
 </template>
 
 <script>
 import { getOpenid, setOpenid, setStore, getStore } from "./utils/utils";
-import { showMenuItems } from "./utils/wxapi";
 export default {
   data() {
     return {
@@ -19,7 +17,7 @@ export default {
     };
   },
   mounted() {
-    // setOpenid("o8XsE0mLDD5jNjzqyYSZQgUoVrhA"); //测试环境先授权，发布时删除
+    //setOpenid("obsHk566qXPooTLNhgHfFC-0bQZ4"); //测试环境先授权，发布时删除
 
     // 移动端的浏览器一般都支持window.orientation这个参数，通过这个参数可以判断出手机是处在横屏还是竖屏状态。
     window.addEventListener(
@@ -43,7 +41,6 @@ export default {
     $route: function(to, from, value) {
       // <---------------------------微信授权逻辑------------------------------->
       let openId = getOpenid();
-      let isStart = getStore("mask_isStart");
       if (!openId && window.location.hash.indexOf("oauth") == -1) {
         setStore("BtargetUrl", to.path);
         if (window.location.search.indexOf("?") == -1) {
@@ -51,23 +48,7 @@ export default {
         } else {
           this.$router.replace(`/oauth${window.location.search}`);
         }
-      } else if (
-        isStart != null &&
-        isStart == "false" &&
-        to.path != "/result"
-      ) {
-        //已经答完题，直接进结果页
-        this.$router.replace("/result");
       }
-
-      // //路由返回/home和/from时，重新配置微信隐藏菜单（防止其它无分享页面返回这两个页面导致这两个页面分享功能失效）
-      // // if (openId && (to.path === "/home" || to.path === "/form")) {
-      // //   showMenuItems();
-      // // }
-
-      // // if (to.path === '/answer') {
-      // //   this.isPlay = true
-      // // }
     }
   }
 };

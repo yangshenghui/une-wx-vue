@@ -3,26 +3,28 @@
         <div class="une-main une-user">
             <div class="une-user-title" v-if="Object.keys(customer).length==0">
                 <div class="une-user-avatar" >
-                  <img src="../../assets/images/user.png" alt="" >
+                  <img src="http://une.sven-it.com/image/user.png" alt="" >
                 </div>
-                <div class="une-user-name"><span>用户未登录</span></div>
+                <div class="une-user-name" style="color: red" @click="toMember()"><span>未开通会员</span></div>
             </div>
             <div class="une-user-title" v-if="Object.keys(customer).length!=0">
                 <div class="une-user-avatar">
                     <img :src="customer.headimgurl" alt="">
                 </div>
                 <div class="une-user-name"><span>{{customer.nickname}}</span></div>
-                <div class="une-user-member"><img src="../../assets/images/member.png" alt=""></div>
+                <div class="une-user-member" v-if="customer.ismember == 1"><img src="http://une.sven-it.com/image/member.png" alt=""></div>
+                <div class="une-user-name" style="color: red" v-if="customer.ismember == 0" @click="toMember()"><span>未开通会员</span></div>
             </div>
             <div class="une-user-detail">
                 <h2>我的信息</h2>
                 <ul>
-                    <li>姓名：{{customer.nickname}}</li>
+                    <li>昵称{{customer.nickname}}</li>
+                    <li>姓名：{{customer.name}}</li>
                     <li>性别: {{customer.sex != null ?  customer.sex== '1' ? '男' : '女' : ''}}</li>
-                    <li>出生年月: {{customer.birthday}}</li>
-                    <li>手机号：{{customer.phone}}</li>
+                    <li>手机号码: {{customer.phone}}</li>
                     <li>邮箱：{{customer.email}}</li>
-                    <li>我的会员：{{customer.member}}</li>
+                    <li>公司: {{customer.company}}</li>
+                    <li>职位: {{customer.position}}</li>
                 </ul>
             </div>
             <div class="une-user-buy">
@@ -50,8 +52,6 @@
         <div class="une-footer">
             <div class="une-menus">
                 <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
-                <!-- <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div> -->
-                <!-- <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div> -->
                 <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
             </div>
         </div>
@@ -73,7 +73,6 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$route)
     this.openid = getOpenid()
     this.getCustomer();
   },
@@ -89,11 +88,6 @@ export default {
       if(watchs.rows.length > 0) {
         this.watchs = watchs.rows;
       }
-
-      console.log(watchs.rows.length)
-       console.log(this.limit)
-
-
       this.loading = false;
 
       if (watchs.rows.length < this.limit) {
@@ -116,13 +110,18 @@ export default {
       }
     },
     toVedio(vedioId, gklog) {
-      console.log(vedioId)
       this.$router.push({ name: 'Vedio', params: { vedioId: vedioId, gklog: gklog }});
     },
+    toMember() {
+      this.$router.push({ name: 'Member'});
+    }
   },
 };
 </script>
 <style scoped>
+    .van-list__finished-text {
+      padding-left: 20px !important;
+    }
     .une-user {
         width: 100%;
         background-color: #dcdcdc;
@@ -148,12 +147,12 @@ export default {
         border-radius: 50%;
     }
     .une-user-name {
-      font-size: 0.4rem;
+      color: #8294ae;
+      font-size: 0.3rem;
       font-weight: normal;
       font-stretch: normal;
       line-height: 0.45rem;
       letter-spacing: 0.02rem;
-      color: #010101;
       margin-left: 10Px;
     }
     .une-user-member {

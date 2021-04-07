@@ -4,9 +4,6 @@
         <div class="une-logo">
           <img src="http://une.sven-it.com/image/logo.png" alt="UULTRA  ">
         </div>
-        <!-- <div class="une-search">
-          <van-search v-model="searchVal" shape="round"  placeholder="请输入搜索关键词"/>
-        </div> -->
     </div>
     <div class="une-main">
       <div class="une-carousel">
@@ -50,9 +47,6 @@
     <div class="une-footer">
         <div class="une-menus">
             <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
-            <!-- <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div> -->
-            <!-- <div class="une-menu-item menu-3"><router-link to="/read"></router-link></div> -->
-            <!-- <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div> -->
             <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
         </div>
     </div>
@@ -86,7 +80,6 @@ export default {
   methods: {
     async onLoad() {
       if (this.refreshing) {
-        console.log(this.refreshing)
         this.vedios = [];
         this.refreshing = false;
       }
@@ -96,10 +89,6 @@ export default {
       if(vedios.rows.length > 0) {
         this.vedios = vedios.rows;
       }
-
-      console.log(vedios.rows.length)
-       console.log(this.limit)
-
 
       this.loading = false;
 
@@ -118,31 +107,21 @@ export default {
     },
     async getTypes(){
       const types = await this.$api.reqTypes()
-      console.log(types.rows)
       this.tabs = types.rows
-      console.log(types.rows[0].id)
       this.typeId = types.rows[0].id
     },
     async getSwipes(){
       const swipes = await this.$api.reqSwipes()
-      console.log(swipes)
       this.swipes = swipes.rows
     },
     tabChange(name) {
-      console.log("tabChange")
       this.typeId = name
       this.offerset = 0
       this.refreshing = true
       this.onRefresh()
     },
     async toVedio(vedioId) {
-      console.log(vedioId)
-      // this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
-      const openid = getOpenid()
-      console.log(openid)
-      const paySign = await this.$api.createUnifiedOrder(openid)
-      console.log("paySign"+ paySign)
-      wxpay(paySign)
+      this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
     },
     toSwipe(url) {
       console.log(url)
@@ -152,9 +131,6 @@ export default {
 };
 </script>
 <style>
-/* .van-sticky--fixed {
-  top: 1.82rem;
-} */
 .van-tabs--line .van-tabs__wrap {
   height: 1.08rem !important;
   line-height: 1.08rem !important;;

@@ -32,14 +32,6 @@
             </div>
         </div>
         </div>
-        <!-- <div class="une-footer">
-            <div class="une-menus">
-                <div class="une-menu-item menu-1"><router-link to="/home"></router-link></div>
-                <div class="une-menu-item menu-2"><router-link to="/vedio"></router-link></div>
-                <div class="une-menu-item menu-3"><router-link to="/list"></router-link></div>
-                <div class="une-menu-item menu-4"><router-link to="/user"></router-link></div>
-            </div>
-        </div> -->
     </div>
 </template>
 <script>
@@ -59,7 +51,7 @@
                     aspectRatio: '16:9', // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
                     fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
                     sources: [{
-                    src: '',  // 路径
+                    src: 'http://une.sven-it.com/vedio/video1.mp4',  // 路径
                     type: 'video/mp4'  // 类型
                     }],
                     poster: "", //你的封面地址
@@ -80,13 +72,14 @@
                 },
                 gklog: '',
                 openid: '',
-                vedioId: ''
+                vedioId: '',
+                ismember: 0
 
             }
         },
         mounted() {
           this.openid = getOpenid()
-          console.log(this.$route.params)
+          this. getCustomer()
           if(this.$route.params && this.$route.params.vedioId) {
             this.vedioId = this.$route.params.vedioId
             this.gklog = this.$route.params.gklog
@@ -97,36 +90,32 @@
 
           this.initVideo()
         },
+        destroyed: function () {
+            this.saveGklog()
+        },
         methods: {
+          async getCustomer() {
+            if(this.openid) {
+              const cunstomer = await this.$api.reqCustomer(this.openid)
+              this.ismember = cunstomer.ismember
+            }
+          },
           async getVedio(id){
-            const res = await this.$api.reqVedioById(id)
-            console.log("res")
-            console.log(res)
-            this.playerOptions.sources[0].src = res.url
-            this.playerOptions.poster = res.image
-            this.vedio = res
+            const vedio = await this.$api.reqVedioById(id)
+            this.playerOptions.sources[0].src = vedio.url
+            this.playerOptions.poster = vedio.image
+            this.vedio = vedio
           },
           async saveGklog(){
-            //const res = await this.$api.reqGklog("oNv5N6cnocEjUaFl33pGoRGSxzHs", this.vedioId, this.gklog)
-            console.log("this.opeid" + this.opeid)
-            console.log("this.opeid" + this.gklog)
-            if(this.openid && this.gklog > 0) {
-              const res = await this.$api.reqGklog(this.openid, this.vedioId, this.gklog)
+            if(this.openid && this.ismember == 1 && this.gklog > 0) {
+              await this.$api.reqGklog(this.openid, this.vedioId, this.gklog)
             }
           },
           onClickLeft() {
             this.$router.go(-1);
           },
           initVideo: function () {
-            // const player = this.$refs.videoPlayer.player;
-            // 配置横屏插件
-            // player.landscapeFullscreen({
-            //       fullscreen: {
-            //           enterOnRotate: true, //在横向旋转设备时进入全屏模式
-            //           alwaysInLandscapeMode: true, //即使设备处于纵向模式，也始终以横向模式进入全屏（适用于 chromium、firefox 和 ie>=11）
-            //           iOS: true // 是否在 iOS 上使用假全屏（显示播放器控件而不是系统控件所需）
-            //           }
-            //         });
+
           },
           playerReadied (player) {
             this.myPlayer = player
@@ -134,18 +123,27 @@
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
-              this.saveGklog()
-              // if(this.gklog > 3) {
-              //     player.currentTime(0)
-              //     player.pause()
-              // }
+
+              if(this.vedio.price != 0 && this.ismember == 0 && this.gklog > 3 ) {
+                  player.pause()
+                  this.$dialog.confirm({
+                    title: '开通会员',
+                    message: '开通会员看完整视频',
+                    confirmButtonText: '开通'
+                  })
+                  .then(() => {
+                    this.$router.push({ name: 'Member', params: {vedioId: this.vedioId}});
+                  })
+                  .catch(() => {
+
+                  });
+              }
           },
           download() {
-            console.log(this.vedio.pdfurl)
             window.location.href = this.vedio.pdfurl
           },
           toRead(pdfUrl) {
-            this.$router.push({ name: 'Pdf2', params: { pdfInfo: pdfUrl }});
+            this.$router.push({ name: 'Pdf2', params: { pdfUrl: pdfUrl, vedioId: this.vedioId }});
           },
           onEditorFocus(event) {
               event.enable(false);

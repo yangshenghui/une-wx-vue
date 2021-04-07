@@ -58,7 +58,6 @@ export default {
 
       this.limit += 10;
       const reads = await this.$api.reqReads(this.limit)
-      console.log(reads)
       if(reads.rows.length > 0) {
         this.reads = reads.rows;
       }
@@ -79,7 +78,7 @@ export default {
       this.onLoad();
     },
     toRead(pdfUrl) {
-      this.$router.push({ name: 'Pdf1', params: { pdfInfo: pdfUrl }});
+      this.$router.push({ name: 'Pdf1', params: { pdfUrl: pdfUrl }});
     }
   },
 };

@@ -1,11 +1,9 @@
 <template>
 	<div class="une-container">
+    <div class="une-header">
+        <van-nav-bar title="资料阅读" left-text="返回" left-arrow @click-left="onClickLeft" />
+    </div>
     <div class="une-main">
-		<div class="tools">
-			<div class="pre" @click.stop="prePage"> 上一页</div>
-      <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
-			<div class="next" @click.stop="nextPage"> 下一页</div>
-		</div>
 		<pdf ref="pdf"
 		:src="url"
 		:page="pageNum"
@@ -17,12 +15,11 @@
 		@link-clicked="page = $event">
 		</pdf>
     </div>
-    <div class="une-footer">
-      <div class="une-menus">
-          <div class="une-menu-item menu-1"><router-link to="/pdf"></router-link></div>
-          <div class="une-menu-item menu-4"><router-link to="/users"></router-link></div>
-      </div>
-    </div>
+    <div class="tools">
+			<div class="pre" @click.stop="prePage"> 上一页</div>
+      <div class="page">{{pageNum}}/{{pageTotalNum}} </div>
+			<div class="next" @click.stop="nextPage"> 下一页</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -43,45 +40,54 @@
 			}
 		},
 		created () {
-      if(this.$route.params && this.$route.params.pdfInfo) {
-        this.url = this.$route.params.pdfInfo;
+      if(this.$route.params && this.$route.params.pdfUrl) {
+        this.url = this.$route.params.pdfUrl;
       }else {
          this.$router.go(-1)
       }
     },
 		methods: {
-            // 上一页函数，
+      onClickLeft() {
+        this.$router.go(-1);
+      },
+      // 上一页函数，
 			prePage() {
 				var page = this.pageNum
 				page = page > 1 ? page - 1 : this.pageTotalNum
 				this.pageNum = page
 			},
-            // 下一页函数
+      // 下一页函数
 			nextPage() {
 				var page = this.pageNum
 				page = page < this.pageTotalNum ? page + 1 : 1
 				this.pageNum = page
 			},
-            // 页面顺时针翻转90度。
+      // 页面顺时针翻转90度。
 			clock() {
 				this.pageRotate += 90
 			},
-            // 页面逆时针翻转90度。
+      // 页面逆时针翻转90度。
 			counterClock() {
 				this.pageRotate -= 90
 			},
-            // 页面加载回调函数，其中e为当前页数
+      // 页面加载回调函数，其中e为当前页数
 			pageLoaded(e) {
 				this.curPageNum = e
 			},
-            // 其他的一些回调函数。
+      // 其他的一些回调函数。
 			pdfError(error) {
 				console.error(error)
 			},
 		}
 	}
 </script>
-<style scoped>
+<style lang="less" scoped>
+ /deep/ .van-icon {
+   color: #8294ae;
+ }
+ /deep/ .van-nav-bar__text {
+   color: #8294ae;
+ }
  .tools {
     display: flex;
     flex-direction: unset;
@@ -90,12 +96,13 @@
     line-height: 45px;
     text-align: center;
     color: #ccc;
+    .page {
+        border-left: 1px solid #ccc;
+        border-right: 1px solid #ccc;
+    }
+    .pre, .next, .page {
+      flex: 1;
+    }
  }
- .page {
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
- }
- .pre, .next, .page {
-   flex: 1;
- }
+
 </style>
