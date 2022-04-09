@@ -73,7 +73,8 @@
                 gklog: '',
                 openid: '',
                 vedioId: '',
-                ismember: 0
+                ismember: 0,
+                gklogLimit:0
 
             }
         },
@@ -87,7 +88,7 @@
           }else {
             this.$router.push({name: 'Home'})
           }
-
+          this.getGklogLimit()
           this.initVideo()
         },
         destroyed: function () {
@@ -111,6 +112,10 @@
               await this.$api.reqGklog(this.openid, this.vedioId, this.gklog)
             }
           },
+          async getGklogLimit(){
+              const gklogLimit = await this.$api.reqGklogLimit();
+              this.gklogLimit = parseInt(gklogLimit.value);
+          },
           onClickLeft() {
             this.$router.go(-1);
           },
@@ -123,8 +128,7 @@
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
-
-              if(this.vedio.price != 0 && this.ismember == 0 && this.gklog > 3 ) {
+              if(this.vedio.price != 0 && this.ismember == 0 && this.gklog > this.gklogLimit*60 ) {
                   player.pause()
                   this.$dialog.confirm({
                     title: '开通会员',

@@ -11,6 +11,7 @@ export const reqWatchs = (openid, limit) => ajax('v1/weixin/getWatchs', {openid,
 export const reqGklog = (openid, vedioId, gklog) => ajax('v1/weixin/saveWatchs', {openid, vedioId, gklog})
 export const downloadPdf = (pdfSrc) => ajax('v1/weixin/downloadPdf', {pdfSrc})
 export const createUnifiedOrder = (payload) => ajax('v1/weixin/createUnifiedOrder', payload)
+export const reqGklogLimit = () => ajax('v1/weixin/getGklogLimit', {}, {type:'GET'})
 
 
 
@@ -24,5 +25,6 @@ export default {
   reqWatchs,
   reqGklog,
   downloadPdf,
-  createUnifiedOrder
+  createUnifiedOrder,
+  reqGklogLimit
 }

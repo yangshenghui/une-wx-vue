@@ -2,7 +2,7 @@
   <div class="une-container">
     <div class="une-header">
         <div class="une-logo">
-          <img src="http://une.sven-it.com/image/logo.png" alt="UULTRA  ">
+          <img src="http://cdn.unechannel.com/logo.png" alt="UULTRA  ">
         </div>
     </div>
     <div class="une-main">
@@ -25,14 +25,13 @@
               >
                 <div class="list-item" >
                   <div class="une-vedios">
-                    <div class="une-vedio-item" v-for="vedio in vedios" :key="vedio.id" @click="toVedio(vedio.id)" >
+                    <div class="une-vedio-item"  v-for="vedio in vedios" :key="vedio.id" @click="toVedio(vedio.id)" style="position:relative;">
+                      <img v-if="vedio.price != 0" src="http://cdn.unechannel.com/vip.png" style="position:absolute;top:-6px;right:0px;width: 20px;height: 20px;"/>
                       <div class="une-cover">
                         <img :src="vedio.image" alt="vedio-cover">
                       </div>
                       <div class="une-desc">
                         <span>{{vedio.title}}</span>
-                        <span v-if="vedio.price == 0">免费</span>
-                        <span v-if="vedio.price != 0">收费</span>
                       </div>
                     </div>
                   </div>

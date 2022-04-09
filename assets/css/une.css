@@ -22,25 +22,25 @@
   height: 1.23rem;
 }
 .menu-1 {
-    background-image: url(http://une.sven-it.com/image/header.png);
+    background-image: url(http://cdn.unechannel.com/header.png);
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
 }
 .menu-2 {
-  background-image: url(http://une.sven-it.com/image/look-vedio.png);
+  background-image: url(http://cdn.unechannel.com/look-vedio.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 .menu-3 {
-  background-image: url(http://une.sven-it.com/image/buy-vedio.png);
+  background-image: url(http://cdn.unechannel.com/buy-vedio.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 .menu-4 {
-  background-image: url(http://une.sven-it.com/image/user-center.png);
+  background-image: url(http://cdn.unechannel.com/user-center.png);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;

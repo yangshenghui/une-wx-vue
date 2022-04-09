@@ -19,7 +19,7 @@
                 <ul>
                     <li>昵称{{customer.nickname}}</li>
                     <li>姓名：{{customer.name}}</li>
-                    <li>性别: {{customer.sex != null ?  customer.sex== '1' ? '男' : '女' : ''}}</li>
+                    <li>性别: {{customer.sex != null ?  (customer.sex== '1' ? '男' : customer.sex== '1' ? '女' : '未知') : ''}}</li>
                     <li>手机号码: {{customer.phone}}</li>
                     <li>邮箱：{{customer.email}}</li>
                     <li>公司: {{customer.company}}</li>

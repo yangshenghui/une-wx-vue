@@ -18,20 +18,20 @@
           label="手机号"
           type="tel"
           placeholder="手机号"
-          :rules="[{ required: true, message: '请填写手机号' }]"
         />
         <van-field
           v-model="email"
           name="email"
           label="邮箱"
           placeholder="邮箱"
-          :rules="[{ required: true, message: '请填写邮箱' }]"
         />
         <van-field
           v-model="company"
           name="company"
+          required
           label="公司"
           placeholder="公司"
+          :rules="[{ required: true, message: '请填写公司' }]"
         />
         <van-field
           v-model="position"
@@ -85,6 +85,9 @@
       },
       async onSubmit(values) {
         console.log('submit', values);
+        if(values.email == "" && values.phone == "") {
+            this.$notify({ type: 'danger', message: '请填写手机或邮箱' });
+        }
         const openid = getOpenid()
         console.log(openid)
         if(openid) {
