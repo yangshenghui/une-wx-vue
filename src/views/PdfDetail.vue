@@ -32,7 +32,7 @@
             }
         },
         created () {
-            if(this.$route.params && this.$route.params.pdfId) {
+            if(this.$route.params && this.$route.params.pdfUrl) {
                 console.log(this.$route.params)
                 this.vedioId = this.$route.params.vedioId;
                 this.vip = this.$route.params.vip;
@@ -61,6 +61,7 @@
                 console.log("getNumPages")
                 console.log("this.vip" + this.vip)
                 console.log("this.ismember" + this.ismember)
+                console.log("this.url" + this.url)
                 if(this.vip == "2" && this.ismember == 0) {
                     console.log(this.url)
                     let loadingTask = pdf.createLoadingTask(this.url)
