@@ -33,6 +33,7 @@
         },
         created () {
             if(this.$route.params && this.$route.params.pdfId) {
+                console.log(this.$route.params)
                 this.vedioId = this.$route.params.vedioId;
                 this.vip = this.$route.params.vip;
                 this.url = this.$route.params.pdfUrl;
