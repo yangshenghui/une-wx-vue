@@ -4,6 +4,7 @@ import ajax from './ajax'
 export const reqTypes = () => ajax('v1/weixin/getTypes', {}, {type:'GET'})
 export const reqSwipes = () => ajax('v1/weixin/getSwipes', {}, {type:'GET'})
 export const reqVedioById = (id) => ajax('v1/weixin/getVedioById', {id})
+export const reqReadById = (id) => ajax('v1/weixin/getReadById', {id})
 export const reqVediosByTypeId = (typeId, limit) => ajax('v1/weixin/getVediosByTypeId', {typeId, limit})
 export const reqReads = (limit) => ajax('v1/weixin/getReads', {limit})
 export const reqCustomer = (openid) => ajax('v1/weixin/getCustomer', {openid})
@@ -19,6 +20,7 @@ export default {
   reqTypes,
   reqSwipes,
   reqVedioById,
+  reqReadById,
   reqVediosByTypeId,
   reqReads,
   reqCustomer,

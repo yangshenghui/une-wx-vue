@@ -13,12 +13,17 @@
                 @load="onLoad"
               >
                 <div class="list-item" v-for="item in reads" :key="item.id" >
-                  <div class="une-read">
+                  <div class="une-read" @click.stop="toRead(item.id, item.url, item.vip)">
+                      <div class="une-read-cover">
+                        <img src="http://cdn.unechannel.com/article.png"/>
+                      </div>
                       <div class="une-read-detail">
                           <div class="une-read-title"><span>{{item.name}}</span></div>
-
                       </div>
-                      <van-button size="small" color="#8294ae" round type="info" @click.stop="toRead(item.url)">阅读</van-button>
+                      <div class="une-read-vip">
+                        <img v-if="item.vip != 2" src="http://cdn.unechannel.com/free.png"/>
+                        <img v-if="item.vip == 2" src="http://cdn.unechannel.com/vip.png"/>
+                      </div>
                   </div>
               </div>
               </van-list>
@@ -28,13 +33,15 @@
         </div>
         <div class="une-footer">
             <div class="une-menus">
-                <div class="une-menu-item menu-1"><router-link to="/pdf"></router-link></div>
-                <div class="une-menu-item menu-4"><router-link to="/users"></router-link></div>
+                <div class="une-menu-item menu-1"><router-link to="/PdfList"></router-link></div>
+                <div class="une-menu-item menu-4"><router-link to="/PdfUser"></router-link></div>
             </div>
         </div>
     </div>
 </template>
 <script>
+
+import { getOpenid } from "../utils/utils";
 export default {
   data() {
     return {
@@ -43,12 +50,23 @@ export default {
       finished: false,
       refreshing: false,
       limit: 0,
-      downloadLink: ''
+      downloadLink: '',
+      ismember:''
     };
+  },
+  created () {
+      this.openid = getOpenid()
+      this. getCustomer()
   },
   methods: {
     download(data) {
       window.location.href = data
+    },
+    async getCustomer() {
+        if(this.openid) {
+            const cunstomer = await this.$api.reqCustomer(this.openid)
+            this.ismember = cunstomer.ismember
+        }
     },
     async onLoad() {
       if (this.refreshing) {
@@ -77,8 +95,8 @@ export default {
       this.loading = true;
       this.onLoad();
     },
-    toRead(pdfUrl) {
-      this.$router.push({ name: 'Pdf1', params: { pdfUrl: pdfUrl }});
+    toRead(pdfId, pdfUrl, vip) {
+      this.$router.push({ name: 'PdfDetail', params: { pdfId: pdfId, pdfUrl: pdfUrl, vip: vip, ismember: this.ismember }});
     }
   },
 };
@@ -113,8 +131,8 @@ export default {
         border-bottom: 1px solid #ccc;
     }
     .une-read-cover {
-        width: 3.48rem;
-	      height: 2rem;
+        width: 30px;
+        height: 30px;
     }
     .une-read-cover img{
         width: 100%;
@@ -126,6 +144,14 @@ export default {
         flex-direction: column;
         justify-content: flex-start;
         align-items: baseline;
+    }
+    .une-read-vip {
+      width: 30px;
+      height: 30px;
+    }
+    .une-read-vip img{
+      width: 100%;
+      height: 100%;
     }
     .une-read-title,
     .une-read-progress {

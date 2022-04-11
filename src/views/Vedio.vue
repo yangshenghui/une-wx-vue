@@ -128,7 +128,7 @@
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
-              if(this.vedio.price != 0 && this.ismember == 0 && this.gklog > this.gklogLimit*60 ) {
+              if(this.vedio.vip == "2" && this.ismember == 0 && this.gklog > this.gklogLimit*60 ) {
                   player.pause()
                   this.$dialog.confirm({
                     title: '开通会员',
@@ -147,7 +147,7 @@
             window.location.href = this.vedio.pdfurl
           },
           toRead(pdfUrl) {
-            this.$router.push({ name: 'Pdf2', params: { pdfUrl: pdfUrl, vedioId: this.vedioId }});
+            this.$router.push({ name: 'PdfDetail', params: { pdfUrl: pdfUrl, vedioId: this.vedioId }});
           },
           onEditorFocus(event) {
               event.enable(false);

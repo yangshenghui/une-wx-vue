@@ -26,7 +26,7 @@
                 <div class="list-item" >
                   <div class="une-vedios">
                     <div class="une-vedio-item"  v-for="vedio in vedios" :key="vedio.id" @click="toVedio(vedio.id)" style="position:relative;">
-                      <img v-if="vedio.price != 0" src="http://cdn.unechannel.com/vip.png" style="position:absolute;top:-6px;right:0px;width: 20px;height: 20px;"/>
+                      <img v-if="vedio.vip == 2" src="http://cdn.unechannel.com/vip.png" style="position:absolute;top:-6px;right:0px;width: 20px;height: 20px;"/>
                       <div class="une-cover">
                         <img :src="vedio.image" alt="vedio-cover">
                       </div>

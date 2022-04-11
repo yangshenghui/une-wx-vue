@@ -3,10 +3,9 @@ const Home = () => import('../views/Home.vue')
 const List = () => import('../views/List.vue')
 const Vedio = () => import('../views/Vedio.vue')
 const User = () => import('../views/User.vue')
-const Pdf = () => import('../views/Pdf.vue')
-const Users = () => import('../views/Users.vue')
-const Pdf1 = () => import('../views/Pdf1.vue')
-const Pdf2 = () => import('../views/Pdf2.vue')
+const PdfList = () => import('../views/PdfList.vue')
+const PdfUser = () => import('../views/PdfUser.vue')
+const PdfDetail = () => import('../views/PdfDetail.vue')
 const Member = () => import('../views/Member.vue')
 
 
@@ -47,24 +46,19 @@ export default [
     component: User
   },
   {
-    path: '/Pdf',
-    name: "Pdf",
-    component: Pdf
+    path: '/PdfList',
+    name: "PdfList",
+    component: PdfList
   },
   {
-    path: '/Users',
-    name: "Users",
-    component: Users
+    path: '/PdfUser',
+    name: "PdfUser",
+    component: PdfUser
   },
   {
-    path: '/Pdf1',
-    name: "Pdf1",
-    component: Pdf1
-  },
-  {
-    path: '/Pdf2',
-    name: "Pdf2",
-    component: Pdf2
+    path: '/PdfDetail',
+    name: "PdfDetail",
+    component: PdfDetail
   },
   {
     path: '/Member',

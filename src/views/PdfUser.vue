@@ -50,8 +50,8 @@
         </div>
         <div class="une-footer">
             <div class="une-menus">
-                <div class="une-menu-item menu-1"><router-link to="/pdf"></router-link></div>
-                <div class="une-menu-item menu-4"><router-link to="/users"></router-link></div>
+                <div class="une-menu-item menu-1"><router-link to="/PdfList"></router-link></div>
+                <div class="une-menu-item menu-4"><router-link to="/PdfUser"></router-link></div>
             </div>
         </div>
     </div>
