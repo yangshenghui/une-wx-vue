@@ -70,7 +70,7 @@
     },
 		methods: {
       onClickLeft() {
-        this.$router.push({ name: 'User', params: {}});
+          this.$router.go(-1)
       },
       async getCustomer() {
         if(getOpenid()) {

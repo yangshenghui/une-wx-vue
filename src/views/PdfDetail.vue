@@ -4,12 +4,16 @@
       <van-nav-bar title="资料阅读" left-text="返回" left-arrow @click-left="onClickLeft" />
     </div>
     <div class="une-main">
+      <div class="une-loading-table" v-if="loading">
+        <van-loading color="#1989fa" class="une-loading-cell"/>
+      </div>
       <pdf
         ref="pdf"
         v-for="i in numPages"
         :key="i"
         :src="url"
         :page="i"
+        @page-loaded="pageLoaded($event)"
       ></pdf>
     </div>
   </div>
@@ -23,6 +27,7 @@
         },
         data() {
             return {
+                loading: true,
                 url: "",
                 vip: "",
                 numPages: null, // pdf 总页数
@@ -32,6 +37,7 @@
             }
         },
         created () {
+            console.log("dadada")
             if(this.$route.params && this.$route.params.pdfUrl) {
                 console.log(this.$route.params)
                 this.vedioId = this.$route.params.vedioId;
@@ -47,9 +53,12 @@
             this.getNumPages()
         },
         methods: {
-
+            pageLoaded(pageLoaded) {
+              if(pageLoaded == this.numPages)  {
+                  this.loading = false;
+              }
+            },
             onClickLeft() {
-                console.log(this.vedioId)
                 if(this.vedioId != undefined) {
                     this.$router.push({ name: 'Vedio', params: { vedioId: this.vedioId }});
                 } else {
@@ -58,16 +67,11 @@
 
             },
             getNumPages() {
-                console.log("getNumPages")
-                console.log("this.vip" + this.vip)
-                console.log("this.ismember" + this.ismember)
-                console.log("this.url" + this.url)
                 if(this.vip == "2" && this.ismember == 0) {
                     console.log(this.url)
                     let loadingTask = pdf.createLoadingTask(this.url)
                     loadingTask.promise.then(pdf => {
                         this.numPages = 2
-                    }).catch(err => {
                     }).catch(err => {
                         console.error('pdf 加载失败', err);
                     })
@@ -75,20 +79,16 @@
                         title: '开通会员',
                         message: '开通会员看完整文档',
                         confirmButtonText: '开通'
-                    })
-                        .then(() => {
-                            this.$router.push({ name: 'Member', params: {vedioId: this.vedioId}});
-                        })
-                        .catch(() => {
-
-                        });
+                    }).then(() => {
+                        this.$router.push({ name: 'Member'});
+                    }).catch(() => {
+                    });
                 } else {
                     let loadingTask = pdf.createLoadingTask(this.url)
                     loadingTask.promise.then(pdf => {
                         this.numPages = pdf.numPages
                     }).catch(err => {
-                    }).catch(err => {
-                        console.error('pdf 加载失败', err);
+                        this.$notify({ type: 'error', message: 'pdf 加载失败' });
                     })
                 }
 
@@ -102,5 +102,18 @@
   }
   /deep/ .van-nav-bar__text {
     color: #8294ae;
+  }
+  .une-loading-table {
+    position: absolute;
+    display: table;
+    width: 100%;
+    height: 100%;
+    z-index: 2000;
+    background-color: white;
+  }
+  .une-loading-cell {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
   }
 </style>
