@@ -18,7 +18,7 @@
             <div class="une-user-detail">
                 <h2>我的信息</h2>
                 <ul>
-                    <li>昵称{{customer.nickname}}</li>
+                    <li>昵称：{{customer.nickname}}</li>
                     <li>姓名：{{customer.name}}</li>
                     <li>性别: {{customer.sex != null ?  (customer.sex== '1' ? '男' : customer.sex== '1' ? '女' : '未知') : ''}}</li>
                     <li>手机号码: {{customer.phone}}</li>
