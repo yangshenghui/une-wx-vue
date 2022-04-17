@@ -11,6 +11,7 @@
                                 :playsinline="true"
                                 :options="playerOptions"
                                 @ready="playerReadied"
+                                @canplay="onPlayerCanplay($event)"
                                 @timeupdate = "onPlayerTimeupdate($event)"
                             ></video-player>
             </div>
@@ -122,10 +123,11 @@
           initVideo: function () {
 
           },
-          playerReadied (player) {
-            this.myPlayer = player
-              alert("this.gklog:"+this.gklog)
+          playerReadied () {
             player.currentTime(this.gklog)
+          },
+            onPlayerCanplay () {
+              this.myPlayer.currentTime(this.gklog)
           },
           onPlayerTimeupdate (player) {
               this.gklog = player.cache_.currentTime
