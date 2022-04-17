@@ -41,7 +41,6 @@ export default {
     $route: function(to, from, value) {
       // <---------------------------微信授权逻辑------------------------------->
       let openId = getOpenid();
-      alert("openId"+openId)
       if (!openId && window.location.hash.indexOf("oauth") == -1) {
         setStore("BtargetUrl", to.path);
         if (window.location.search.indexOf("?") == -1) {
