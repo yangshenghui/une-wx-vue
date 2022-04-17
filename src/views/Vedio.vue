@@ -123,7 +123,8 @@
           initVideo: function () {
 
           },
-          playerReadied () {
+          playerReadied (player) {
+            this.myPlayer = player
             player.currentTime(this.gklog)
           },
             onPlayerCanplay () {
