@@ -221,7 +221,8 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 0.2rem;;
+  padding-top: 0.2rem;
+  text-align: center;
 }
 .une-desc span{
 	font-size: 0.24rem;
@@ -230,6 +231,6 @@ export default {
 	line-height: 0.45rem;
 	letter-spacing: 0.01rem;
 	color: #010101;
-  text-align: center;
+
 }
 </style>
