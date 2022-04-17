@@ -124,6 +124,7 @@
           },
           playerReadied (player) {
             this.myPlayer = player
+              alert("this.gklog:"+this.gklog)
             player.currentTime(this.gklog)
           },
           onPlayerTimeupdate (player) {
