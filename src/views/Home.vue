@@ -231,7 +231,7 @@ export default {
 	line-height: 0.45rem;
 	letter-spacing: 0.01rem;
 	color: #010101;
-  padding-left: 5px;
+  padding: 0 20px;
 
 }
 </style>
