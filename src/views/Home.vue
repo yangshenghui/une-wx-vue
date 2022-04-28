@@ -25,7 +25,7 @@
               >
                 <div class="list-item" >
                   <div class="une-vedios">
-                    <div class="une-vedio-item"  v-for="vedio in vedios" :key="vedio.id" @click="toVedio(vedio.id)" style="position:relative;">
+                    <div class="une-vedio-item"  v-for="vedio in vedios" :key="vedio.id" @click="toVedio(vedio.url, vedio.vip)" style="position:relative;">
                       <img v-if="vedio.vip == 2" src="http://cdn.unechannel.com/vip.png" style="position:absolute;top:-6px;right:0px;width: 20px;height: 20px;"/>
                       <div class="une-cover">
                         <img :src="vedio.image" alt="vedio-cover">
@@ -54,7 +54,6 @@
 <script>
 
 import { getOpenid } from "../utils/utils";
-import { wxpay } from "../utils/wxapi";
 
 export default {
   data() {
@@ -70,13 +69,23 @@ export default {
       refreshing: false,
       typeId: '',
       limit: 0,
+      openid: '',
+      ismember:''
     };
   },
   mounted() {
+    this.openid = getOpenid();
+    this. getCustomer();
     this.getTypes();
     this.getSwipes();
   },
   methods: {
+    async getCustomer() {
+        if(this.openid) {
+            const cunstomer = await this.$api.reqCustomer(this.openid)
+            this.ismember = cunstomer.ismember
+        }
+    },
     async onLoad() {
       if (this.refreshing) {
         this.vedios = [];
@@ -119,11 +128,26 @@ export default {
       this.refreshing = true
       this.onRefresh()
     },
-    async toVedio(vedioId) {
-      this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
+    async toVedio(url, vip) {
+      //this.$router.push({ name: 'Vedio', params: { vedioId: vedioId }});
+      if(vip == "2" && this.ismember == 0) {
+          this.$dialog.confirm({
+              title: '开通会员',
+              message: '开通会员看完整视频',
+              confirmButtonText: '开通'
+          })
+              .then(() => {
+                  this.$router.push({ name: 'Member', params: {vedioId: this.vedioId}});
+              })
+              .catch(() => {
+
+              });
+      } else {
+          window.location.href= url
+      }
+
     },
     toSwipe(url) {
-      console.log(url)
       window.location.href= url
     }
   }
